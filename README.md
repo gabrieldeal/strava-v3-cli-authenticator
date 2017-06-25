@@ -9,8 +9,8 @@ Node.js API for command-line applications that need to authenticate via the Stra
 
   const options = {
     clientId: 12345,
-	clientSecret: 'x5f111xx11yyyy2222z3aa4b5555c6d777e88f9',
-    scope: "write",
+    clientSecret: 'x5f111xx11yyyy2222z3aa4b5555c6d777e88f9',
+    scope: 'write',
     httpPort: 8888
   };
   const callback = (error, accessToken) => {
