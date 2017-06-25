@@ -1,0 +1,32 @@
+{
+  "name": "strava-v3-cli-authenticator",
+  "version": "0.0.1",
+  "description": "API for command line apps that need to authenticate with the Strava V3 API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo not implemented; exit 1",
+    "generate-markdown": "jsdoc2md index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gabrielmdeal/strava-v3-cli-authenticator.git"
+  },
+  "keywords": [
+    "strava",
+    "node",
+    "api"
+  ],
+  "author": "Gabriel M Deal <gabriel@dicksonlabs.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gabrielmdeal/strava-v3-cli-authenticator/issues"
+  },
+  "homepage": "https://github.com/gabrielmdeal/strava-v3-cli-authenticator#readme",
+  "dependencies": {
+    "opn": "^5.1.0",
+    "request": "^2.81.0"
+  },
+  "devDependencies": {
+    "jsdoc-to-markdown": "^3.0.0"
+  }
+}
