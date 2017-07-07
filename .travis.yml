@@ -1,0 +1,5 @@
+language: node_js
+# The Node version specified by .nvmrc
+
+script:
+  - npm run eslint
