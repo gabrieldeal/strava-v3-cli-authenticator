@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo not implemented; exit 1",
-    "generate-markdown": "jsdoc2md index.js"
+    "generate-markdown": "jsdoc2md index.js",
+    "eslint": "eslint --ignore-pattern node_modules **/*.js **/*.es6"
   },
   "repository": {
     "type": "git",
@@ -27,6 +28,12 @@
     "request": "^2.81.0"
   },
   "devDependencies": {
+    "eslint": "^4.1.1",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-node": "^5.1.0",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1",
     "jsdoc-to-markdown": "^3.0.0"
   }
 }

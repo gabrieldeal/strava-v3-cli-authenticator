@@ -6,7 +6,7 @@ var opn = require('opn');
 var request = require('request');
 var { URL } = require('url');
 
-function handleAuthorizeRedirectRequest({ handleAuthorizeCode, request, response, serverContainer }) {
+function handleAuthorizeRedirectRequest ({ handleAuthorizeCode, request, response, serverContainer }) {
   const url = new URL(request.url, 'http://localhost');
   if (url.pathname !== '/code') {
     console.info(`Ignoring request to ${request.url}`);
@@ -19,7 +19,7 @@ function handleAuthorizeRedirectRequest({ handleAuthorizeCode, request, response
   serverContainer.server.close();
 }
 
-function makeTokenExchangeRequest({ clientId, clientSecret, code, handleAccessToken }) {
+function makeTokenExchangeRequest ({ clientId, clientSecret, code, handleAccessToken }) {
   const url = 'https://www.strava.com/oauth/token';
   const form = {
     client_id: clientId,
@@ -28,6 +28,11 @@ function makeTokenExchangeRequest({ clientId, clientSecret, code, handleAccessTo
   };
 
   const handleTokenExchangeResponse = (error, response, bodyJson) => {
+    if (error) {
+      // FIXME: this should be passed to the handleAccessToken callback.
+      throw Error(error);
+    }
+
     const body = JSON.parse(bodyJson);
     handleAccessToken(undefined, body.access_token);
   };
@@ -35,13 +40,14 @@ function makeTokenExchangeRequest({ clientId, clientSecret, code, handleAccessTo
   request.post({ url, form }, handleTokenExchangeResponse);
 }
 
-function startWebserver(handleAuthorizeCode, port) {
+function startWebserver (handleAuthorizeCode, port) {
   const serverContainer = {};
   const culledHandleRequest = (request, response) =>
-        handleAuthorizeRedirectRequest({ handleAuthorizeCode, request, response, serverContainer });
+    handleAuthorizeRedirectRequest({ handleAuthorizeCode, request, response, serverContainer });
   const server = HTTP.createServer(culledHandleRequest);
   server.listen(port, (err) => {
     if (err) {
+      // FIXME: this should be passed to the handleAccessToken callback.
       throw Error(err);
     }
   })
@@ -57,9 +63,9 @@ function startWebserver(handleAuthorizeCode, port) {
  * @param {number} options.httpPort - Local port used for the Strava redirect with the Strava auth code.
  * @param {function} handleAccessToken - Callback that is passed (error, accessToken).
  */
-function authorize({ scope, clientId, clientSecret, httpPort }, handleAccessToken) {
+function authorize ({ scope, clientId, clientSecret, httpPort }, handleAccessToken) {
   const handleAuthorizeCode = (code) =>
-        makeTokenExchangeRequest({ clientId, clientSecret, code, handleAccessToken });
+    makeTokenExchangeRequest({ clientId, clientSecret, code, handleAccessToken });
   startWebserver(handleAuthorizeCode, httpPort)
 
   const redirectUrl = `http://localhost:${httpPort}/code`;
@@ -74,6 +80,5 @@ function authorize({ scope, clientId, clientSecret, httpPort }, handleAccessToke
 
   opn(authUrl.href);
 }
-
 
 module.exports = authorize;
