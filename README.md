@@ -43,7 +43,7 @@ Authorize against the Strava V3 API and return the Strava access token via a cal
 | options | <code>Object</code> |  |
 | options.clientId | <code>string</code> | Strava client ID. |
 | options.clientSecret | <code>string</code> | Strava client secret. |
-| options.scope | <code>string</code> | "write", "view_private", or the empty string. |
+| options.scope | <code>string</code> | "read", "activity:write", etc.  See http://developers.strava.com/docs/authentication/#details-about-requesting-access |
 | options.httpPort | <code>number</code> | Local port used for the Strava redirect with the Strava auth code. |
 | handleAccessToken | <code>function</code> | Callback that is passed (error, accessToken). |
 
